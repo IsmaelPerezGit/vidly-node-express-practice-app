@@ -38,11 +38,18 @@ app.put('/api/genres/:id', (req, res) => {
 });
 
 app.delete('/api/genres/:id', (req, res) => {
-  const genre = genres.find(c => c.id === req.params.id);
+  const genre = genres.find(c => c.id === +req.params.id);
   if (!genre) res.status(404).send('The genre with the given id was not found...');
 
   const index = genres.indexOf(genre);
   genres.splice(index, 1);
+
+  res.send(genre);
+});
+
+app.get('/api/genres/:id', (req, res) => {
+  const genre = genres.find(c => c.id === +req.params.id);
+  if (!genre) res.status(404).send('The genre with the given id was not found...');
 
   res.send(genre);
 });
