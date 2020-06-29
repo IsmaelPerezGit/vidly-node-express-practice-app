@@ -1,5 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+
+const genreSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50,
+  },
+});
 
 const genres = [
   { id: 1, name: 'Action' },
