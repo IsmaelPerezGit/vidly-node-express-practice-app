@@ -12,6 +12,10 @@ const Customer = mongoose.model(
       minlength: 1,
       maxlength: 50,
     },
+    isGold: {
+      type: Boolean,
+      default: false,
+    },
     phone: {
       type: String,
       required: true,
@@ -38,6 +42,7 @@ router.post('/', async (req, res) => {
   let customer = new Customer({
     name: req.body.name,
     phone: req.body.phone,
+    isGold: req.body.isGold,
   });
   customer = await customer.save();
   res.send(customer);
@@ -66,8 +71,9 @@ router.delete('/:id', async (req, res) => {
 
 const validateCustomer = customer => {
   const schema = {
-    name: Joi.string().min(1).required(),
-    phone: Joi.required(),
+    name: Joi.string().min(1).max(50).required(),
+    isGold: Joi.boolean(),
+    phone: Joi.string().min(1).max(50).required(),
   };
   return Joi.validate(customer, schema);
 };
