@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const mongoPass = require('./keys');
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
 const app = express();
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
@@ -13,6 +14,7 @@ mongoose
 
 app.use(express.json());
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Now listening on port ${port}`));
