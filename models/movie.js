@@ -1,11 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Joi = require('joi');
-const router = express.Router();
 const { genreSchema } = require('./genre');
 
 const Movie = new mongoose.model(
-  'Movies',
+  'Movie',
   new mongoose.Schema({
     title: {
       type: String,
@@ -40,8 +39,8 @@ const validateMovie = movie => {
     numberInStock: Joi.number().min(0).required(),
     dailyRentalRate: Joi.number().min(0).required(),
   };
-
   return Joi.validate(movie, schema);
 };
 
-module.exports = router;
+module.exports.Movie = Movie;
+module.exports.validateMovie = validateMovie;
