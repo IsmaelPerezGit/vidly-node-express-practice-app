@@ -6,6 +6,8 @@ const customers = require('./routes/customers');
 const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const app = express();
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 
