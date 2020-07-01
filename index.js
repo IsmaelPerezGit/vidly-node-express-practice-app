@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
 const mongoPass = require('./keys');
@@ -10,6 +11,11 @@ const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+
+if (!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwt private key is not defined.');
+  process.exit(1);
+}
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 
