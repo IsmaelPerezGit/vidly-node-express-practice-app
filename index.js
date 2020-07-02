@@ -1,4 +1,5 @@
 require('express-async-errors');
+require('winston-mongodb');
 const winston = require('winston');
 const error = require('./middleware/error');
 const config = require('config');
@@ -15,14 +16,14 @@ const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
+const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.MongoDB({ db: mongoConnectionUrl }));
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwt private key is not defined.');
   process.exit(1);
 }
-
-const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 
 mongoose
   .connect(mongoConnectionUrl)
