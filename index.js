@@ -17,13 +17,13 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 
 process.on('uncaughtException', ex => {
-  console.log('WE GOT AN UNCAUGHT EXCEPTION');
   winston.error(ex.message, { meta: ex });
+  process.exit(1);
 });
 
 process.on('unhandledRejection', ex => {
-  console.log('WE GOT AN UNHANDLED REJECTION');
   winston.error(ex.message, { meta: ex });
+  process.exit(1);
 });
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
