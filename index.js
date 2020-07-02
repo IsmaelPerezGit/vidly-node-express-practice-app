@@ -18,7 +18,7 @@ const auth = require('./routes/auth');
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
-winston.add(new winston.transports.MongoDB({ db: mongoConnectionUrl }));
+winston.add(new winston.transports.MongoDB({ db: mongoConnectionUrl, metaKey: 'meta' }));
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwt private key is not defined.');
