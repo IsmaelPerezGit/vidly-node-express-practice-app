@@ -7,6 +7,12 @@ module.exports = function () {
   const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 
   winston.handleExceptions(
+    new winston.transports.Console({
+      colorize: true,
+      prettyPrint: true,
+      metaKey: 'meta',
+      level: 'info',
+    }),
     new winston.transports.MongoDB({
       db: mongoConnectionUrl,
       metaKey: 'meta',
