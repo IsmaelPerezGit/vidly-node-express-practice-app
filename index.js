@@ -16,17 +16,20 @@ const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
-process.on('uncaughtException', ex => {
-  winston.error(ex.message, { meta: ex });
-  process.exit(1);
-});
+const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
+
+winston.handleExceptions(
+  new winston.transports.MongoDB({
+    db: mongoConnectionUrl,
+    metaKey: 'meta',
+    level: 'error',
+  })
+);
 
 process.on('unhandledRejection', ex => {
-  winston.error(ex.message, { meta: ex });
-  process.exit(1);
+  throw ex;
 });
 
-const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 winston.add(
   new winston.transports.MongoDB({
