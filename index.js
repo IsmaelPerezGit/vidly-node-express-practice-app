@@ -16,6 +16,11 @@ const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
+process.on('uncaughtException', ex => {
+  console.log('WE GOT AN UNCAUGHT EXCEPTION');
+  winston.error(ex.message, ex);
+});
+
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 winston.add(
