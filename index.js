@@ -18,7 +18,12 @@ const auth = require('./routes/auth');
 
 process.on('uncaughtException', ex => {
   console.log('WE GOT AN UNCAUGHT EXCEPTION');
-  winston.error(ex.message, ex);
+  winston.error(ex.message, { meta: ex });
+});
+
+process.on('unhandledRejection', ex => {
+  console.log('WE GOT AN UNHANDLED REJECTION');
+  winston.error(ex.message, { meta: ex });
 });
 
 const mongoConnectionUrl = `mongodb+srv://admin:${mongoPass}@cluster0-iikki.mongodb.net/vidly-practice?retryWrites=true&w=majority`;
