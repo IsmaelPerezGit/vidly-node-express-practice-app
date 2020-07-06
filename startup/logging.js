@@ -1,6 +1,6 @@
 const mongoPass = require('../keys');
 const winston = require('winston');
-require('winston-mongodb');
+// require('winston-mongodb');
 require('express-async-errors');
 
 module.exports = function () {
@@ -12,12 +12,12 @@ module.exports = function () {
       prettyPrint: true,
       metaKey: 'meta',
       level: 'info',
-    }),
-    new winston.transports.MongoDB({
-      db: mongoConnectionUrl,
-      metaKey: 'meta',
-      level: 'error',
     })
+    // new winston.transports.MongoDB({
+    //   db: mongoConnectionUrl,
+    //   metaKey: 'meta',
+    //   level: 'error',
+    // })
   );
 
   process.on('unhandledRejection', ex => {
@@ -25,11 +25,11 @@ module.exports = function () {
   });
 
   winston.add(new winston.transports.File({ filename: 'logfile.log' }));
-  winston.add(
-    new winston.transports.MongoDB({
-      db: mongoConnectionUrl,
-      metaKey: 'meta',
-      level: 'error',
-    })
-  );
+  // winston.add(
+  //   new winston.transports.MongoDB({
+  //     db: mongoConnectionUrl,
+  //     metaKey: 'meta',
+  //     level: 'error',
+  //   })
+  // );
 };
